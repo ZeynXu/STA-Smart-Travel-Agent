@@ -1,20 +1,25 @@
-from langchain_ollama import OllamaLLM
+from langchain_ollama import OllamaLLM,OllamaEmbeddings
 from langchain_core import document_loaders
+from langchain_community.document_loaders import PyPDFLoader
+from langchain
 import langchain_text_splitters
 import langchain_chroma
 
-
 # 调用LLM
-model=OllamaLLM(model='deepseek-r1:7b')
-
+model = OllamaLLM(model='deepseek-r1:7b')
+embeddings=OllamaEmbeddings(model='nomic-embed-text:latest')
 
 # 加载文档，切分文档
-loader=document_loaders.BaseLoader.load('')
-chunks=langchain_text_splitters.TextSplitter(chunk_size=1000,chunk_overlap=100)
+loader=PyPDFLoader('')
 
-# 文本块存入向量库，建立索引
-db=langchain_chroma.vectorstores()
+splitter = langchain_text_splitters.TextSplitter()
+docs = document_loaders.BaseLoader.load_and_split('', splitter)
+
+# 构造向量数据库和检索器
 
 
 
-# 检索相似文本块，组建prompt
+# 检索结果重排序
+
+
+# 组装prompt，得到响应
